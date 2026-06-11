@@ -1,84 +1,24 @@
-import { createContext, useEffect, useState } from "react";
-import axios from 'axios';
-import { toast } from 'react-toastify';
+import React from 'react'
+import {  cities } from '../assets/assets'
+import {Link} from 'react-router-dom'
 
-export const Appcontext = createContext();
-
-const AppcontextProvider = (props) => {
-  const currencySymbol = '$';
-  const backendurl = 'http://localhost:5000/';
-  const [doctors, setDoctors] = useState([]);
-  const [token, settoken] = useState(localStorage.getItem('token')?localStorage.getItem('token'):false);
-
-  const [userData,setUserdata]=useState(false)
-
-
-  const getDoctorsData = async () => {
-    try {
-      const { data } = await axios.get(backendurl + '/api/doctor/list');
-      if (data.success) {
-        setDoctors(data.doctors);
-      } else {
-        toast.error(data.message);
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error(error.message);
-    }
-  };
-
-  const loaduserProfileData=async(req ,res)=>{
-    try {
-      
-      const {data}=await axios.get(backendurl + '/api/user/getprofile',{headers:{token}})
-      if(data.success){
-        setUserdata(data.userData)
-      }
-      else{
-        toast.error(data.message)
-      }
-
-    } catch (error) {
-       console.log(error);
-      toast.error(error.message);
-    }
-  }
-
-const value = {
-    doctors,
-    getDoctorsData,
-    currencySymbol,
-    token,
-    settoken,
-    backendurl,
-    userData,
-    setUserdata,
-    loaduserProfileData
-  };
-  useEffect(() => {
-    getDoctorsData();
-  }, []);
-
-    useEffect(()=>{
-      if(token){
-        loaduserProfileData()
-      }else{
-        setUserdata(false)
-      }
-    },[token])
-
-  useEffect(() => {
-    const storedToken = localStorage.getItem('token');
-    if (storedToken) settoken(storedToken);
-  }, []);
-
-  
-
+const City = () => {
   return (
-    <Appcontext.Provider value={value}>
-      {props.children}
-    </Appcontext.Provider>
-  );
-};
+    <div className='flex flex-col items-center gap-4 py-16  text-gray-800' id='specialitybar'>
+           <h1 className='text-3xl font-medium  '>Find by city</h1>
+           <p className='sm:w-1/3 text-center text-sm'>Simply browse through our extensive list of trusted doctors, schedule your appointment hassle-free.</p>
+           <div className='flex sm:justify-center gap-4 pt-5 w-full overflow-scroll'>
+               {cities.map((item,index)=>(
+   
+                   <Link onClick={()=>scrollTo(0,0)} className='flex flex-col items-center text-xs cursor-pointer flex-shrink-0 hover:translate-y-[-10px] transition-all duration-200'   to={`/cities/${item.cityname.toLowerCase()}`}>
+                       <img  className='w-20 h-20  sm:w-24 mb-2 rounded-full ' src={item.image} alt=""/>
+                       <p>{item.cityname}</p>
+                   </Link>
+   
+               ))}
+           </div>
+       </div>
+  )
+}
 
-export default AppcontextProvider;
+export default City
