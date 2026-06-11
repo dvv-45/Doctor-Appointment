@@ -7,7 +7,7 @@ export const Doctorcontext=createContext()
 
 const Doctorcontextprovider=(props)=>{
 
-    const backendurl='http://localhost:5174'
+    const backendurl='http://localhost:5000'
     const [dToken,setDToken]=useState(localStorage.getItem('dToken')?localStorage.getItem('dToken'):'')
     const [dashData,setDashData]=useState(false)
     const [appointments,setappointments]=useState([])
