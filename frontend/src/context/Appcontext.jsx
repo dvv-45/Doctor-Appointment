@@ -6,7 +6,7 @@ export const Appcontext = createContext();
 
 const AppcontextProvider = (props) => {
   const currencySymbol = '$';
-  const backendurl = 'http://localhost:5000';
+  const backendurl = 'https://doctor-appointment-backend-p679.onrender.com';
   const [doctors, setDoctors] = useState([]);
   const [token, settoken] = useState(localStorage.getItem('token')?localStorage.getItem('token'):false);
 
