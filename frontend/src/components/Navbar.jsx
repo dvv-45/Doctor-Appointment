@@ -65,7 +65,7 @@ const Navbar = () => {
 
             {/* Updated to Render Admin URL */}
             <a
-              href="http://localhost:5174/"
+              href="https://doctor-appointment-admin-2iin.onrender.com"
               target="_blank"
               rel="noopener noreferrer"
               className='mt-1 px-4 py-2 border'
